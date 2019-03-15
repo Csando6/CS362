@@ -1,7 +1,9 @@
 const int ledPin = 9;
 const int buttonPin = 8;
+
 int buttonVal;
 int toggleValue = 0;
+
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
@@ -39,8 +41,7 @@ void loop() {
     Serial.print("toggle value: ");
     Serial.println(toggleValue);
   }
-
-  digitalWrite(ledPin,toggleValue);
   
 
+  digitalWrite(ledPin,toggleValue);
 }
