@@ -4,7 +4,7 @@ const int buttonPin = 8;
 int buttonVal;
 int toggleValue = 0;
 int toggleRead;
-char TR;
+String TR;
 
 bool button_press(int pin){
   int val;
@@ -48,14 +48,17 @@ void setup() {
 }
 void loop() {
   // put your main code here, to run repeatedly:
-  delay(100);
   if(Serial.available()>0){
-    TR = Serial.read();
+    delay(100);
+    TR = char(Serial.read() );
+    while(Serial.available() > 0){
+      TR += char(Serial.read() );
+    }
+    Serial.print("TR: ");
     Serial.println(TR);
-    toggleRead = TR - '0';
-    Serial.print("ToogleRead: ");
-    Serial.println(toggleRead);  
+    toggleRead = TR.toInt();
   }
+  
   
   if(button_press(buttonPin) ){
     if(toggleValue == 0){
