@@ -3,6 +3,8 @@ const int buttonPin = 8;
 
 int buttonVal;
 int toggleValue = 0;
+int toggleRead;
+char TR;
 
 bool button_press(int pin){
   int val;
@@ -38,6 +40,7 @@ bool serial_to_int(int &toggleValue){
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
+  
   pinMode(ledPin,OUTPUT);
   pinMode(buttonPin,INPUT);
   
@@ -45,9 +48,14 @@ void setup() {
 }
 void loop() {
   // put your main code here, to run repeatedly:
-  //if(serial_to_int(toggleValue) ){
-    
-  //}
+  delay(100);
+  if(Serial.available()>0){
+    TR = Serial.read();
+    Serial.println(TR);
+    toggleRead = TR - '0';
+    Serial.print("ToogleRead: ");
+    Serial.println(toggleRead);  
+  }
   
   if(button_press(buttonPin) ){
     if(toggleValue == 0){
@@ -56,11 +64,12 @@ void loop() {
     else{
       toggleValue = 0;
     }
-    Serial.write(toggleValue);
+    Serial.write(char('0'+toggleValue));
+    //Serial.println(char(toggleValue+'0') );
   }
   
   //Serial.print("toggle value: ");
   //Serial.println(toggleValue);
-
-  digitalWrite(ledPin,toggleValue);
+  
+  digitalWrite(ledPin,toggleRead);
 }
